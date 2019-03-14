@@ -36,12 +36,12 @@
 
 // let object_ = {"hello": "world"};
 
-// type record = {
-//   hello: string,
-//   world: string,
-// };
+ type record = {
+   hello: string,
+   world: string,
+    };
 
-// let record = {hello: "world", world: "hello"};
+ let record = {hello: "world", world: "hello"};
 
 let append = (maybeValue, xs) => {
   switch (maybeValue) {
