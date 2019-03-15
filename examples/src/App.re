@@ -30,6 +30,11 @@ module Styles = {
   let listContainer = style([paddingLeft(`px(0))]);
 };
 
+module GetTodos =
+  Get.Make({
+    type t = list(Model.t);
+  });
+
 type state = {
   todos: list(Model.t),
   newTodoValue: string,
@@ -143,33 +148,35 @@ let make = _children => {
             }
           />
           <ul className=Styles.listContainer>
-
-              <Get>
-                ...{todoState =>
-                  switch (todoState) {
-                  | Loading => ReasonReact.string("loading lho")
-                  | Error(message) => ReasonReact.string(message)
-                  | Idle => ReasonReact.null
-                  | Loaded(todos) =>
-                    todos
-                    |> List.map(todo =>
-                         <Todo_Item
-                           key={todo.id}
-                           onDestroy={_event => send(DeleteTodo(todo.id))}
-                           onUpdate={value =>
-                             send(UpdateTodo(todo.id, value))
-                           }
-                           onToggle={_event => send(ToggleCheck(todo.id))}
-                           todo
-                         />
-                       )
-                    |> Array.of_list
-                    |> ReasonReact.array
-                  }
+            <Bs_react_select
+              options=[|{"label": "indonseia", "value": "aku"}|]
+            />
+            <GetTodos
+              url="http://localhost:3000/todos"
+              readResponse=Model.read_response>
+              ...{todoState =>
+                switch (todoState) {
+                | Loading => ReasonReact.string("loading lho")
+                | Error(message) => ReasonReact.string(message)
+                | Idle => ReasonReact.null
+                | Loaded(todos) =>
+                  todos
+                  |> List.map(todo =>
+                       <Todo_Item
+                         key={todo.id}
+                         onDestroy={_event => send(DeleteTodo(todo.id))}
+                         onUpdate={value => send(UpdateTodo(todo.id, value))}
+                         onToggle={_event => send(ToggleCheck(todo.id))}
+                         todo
+                       />
+                     )
+                  |> Array.of_list
+                  |> ReasonReact.array
                 }
-              </Get>
-            </ul>
-            // {renderTodoItems(state.todos, send)}
+              }
+            </GetTodos>
+          </ul>
+          // {renderTodoItems(state.todos, send)}
           <Todo_Footer
             todoLength={List.length(state.todos)}
             onFilter={selectedFilter => send(OnFilter(selectedFilter))}

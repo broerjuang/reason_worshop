@@ -1,0 +1,7 @@
+type t = {
+    id: string;
+    title<json name="item">: string;
+    checked: bool;
+}
+
+type response = t list

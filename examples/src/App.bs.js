@@ -10,9 +10,11 @@ var React = require("react");
 var Pervasives = require("bs-platform/lib/js/pervasives.js");
 var ReasonReact = require("reason-react/src/ReasonReact.js");
 var Get$ReactTemplate = require("./Get.bs.js");
+var Model$ReactTemplate = require("./Model.bs.js");
 var Todo_Item$ReactTemplate = require("./Todo_Item.bs.js");
 var Todo_Footer$ReactTemplate = require("./Todo_Footer.bs.js");
 var Todo_AddInput$ReactTemplate = require("./Todo_AddInput.bs.js");
+var Bs_react_select$ReactTemplate = require("./Bs_react_select.bs.js");
 
 var container = Css.style(/* :: */[
       Css.display(/* flex */-1010954439),
@@ -68,6 +70,8 @@ var Styles = /* module */[
   /* listContainer */listContainer
 ];
 
+var GetTodos = Get$ReactTemplate.Make(/* module */[]);
+
 var component = ReasonReact.reducerComponent("App_Root");
 
 function make(_children) {
@@ -96,7 +100,10 @@ function make(_children) {
                                         return Curry._1(send, /* HandleEnterKeyDown */Block.__(2, [$$event.which]));
                                       }), /* array */[])), React.createElement("ul", {
                                   className: listContainer
-                                }, ReasonReact.element(undefined, undefined, Get$ReactTemplate.make((function (todoState) {
+                                }, ReasonReact.element(undefined, undefined, Bs_react_select$ReactTemplate.make(/* array */[{
+                                            label: "indonseia",
+                                            value: "aku"
+                                          }], /* array */[])), ReasonReact.element(undefined, undefined, Curry._3(GetTodos[/* make */1], "http://localhost:3000/todos", Model$ReactTemplate.read_response, (function (todoState) {
                                             if (typeof todoState === "number") {
                                               if (todoState === 0) {
                                                 return null;
@@ -232,6 +239,7 @@ function make(_children) {
 }
 
 exports.Styles = Styles;
+exports.GetTodos = GetTodos;
 exports.component = component;
 exports.make = make;
 /* container Not a pure module */
