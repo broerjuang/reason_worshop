@@ -179,3 +179,5 @@ let make = _children => {
     },
   };
 };
+
+let a = 2;
